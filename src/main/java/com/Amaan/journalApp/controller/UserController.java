@@ -1,9 +1,11 @@
 package com.Amaan.journalApp.controller;
 
 
+import com.Amaan.journalApp.api.response.WeatherResponse;
 import com.Amaan.journalApp.entity.User;
 import com.Amaan.journalApp.repository.UserRepository;
 import com.Amaan.journalApp.service.UserService;
+import com.Amaan.journalApp.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private WeatherService weatherService;
 
 
     @PutMapping
@@ -40,4 +45,16 @@ public class UserController {
         userService.deleteByUserName(userName);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping
+    public ResponseEntity<?> greeting() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        WeatherResponse weatherResponse = weatherService.getWeather("Mumbai");
+        String greeting = "";
+        if(weatherResponse != null){
+            greeting =", Weather Feels Like " + weatherResponse.getCurrent().getFeelslike();
+        }
+        return new ResponseEntity<>("Hi " + authentication.getName()+greeting,HttpStatus.OK);
+    }
+
 }
