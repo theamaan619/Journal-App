@@ -23,7 +23,7 @@ public class User {
     @NonNull
     private String userName;
     private String email;
-    private String sentimentAnalysis;
+    private boolean sentimentAnalysis;
     @NonNull
     private String password;
     @DBRef // because of this annotation only reference is stored in our case that is objectId

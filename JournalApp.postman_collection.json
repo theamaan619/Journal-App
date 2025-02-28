@@ -1,0 +1,529 @@
+{
+	"info": {
+		"_postman_id": "be624f0e-2dee-4340-b40e-64902eb3cf9b",
+		"name": "JournalApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41365711"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get All user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/journalApp/user",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"journalApp",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "Amaan63",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"Amaan63\",\r\n    \"password\":\"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/journalApp/user",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"journalApp",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "Amaan63",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/journalApp/user",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"journalApp",
+								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Journal Entries",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb24iLCJpYXQiOjE3NDA0OTc2MTYsImV4cCI6MTc0MDQ5NzkxNn0.pfDa2qSXM_30J9LtayKU_gj6ThV3qPxwUjDslyEvY_U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/journalApp/journal",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"journalApp",
+								"journal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get By Id",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "jon123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "jon",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/journalApp/journal/id/679e47672e05301ef2566535",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"journalApp",
+								"journal",
+								"id",
+								"679e47672e05301ef2566535"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add New",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqb24iLCJpYXQiOjE3NDA0OTc2MTYsImV4cCI6MTc0MDQ5NzkxNn0.pfDa2qSXM_30J9LtayKU_gj6ThV3qPxwUjDslyEvY_U",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Lunch\" ,\r\n    \"content\": \"Lunch is good\",\r\n    \"sentiment\":\"HAPPY\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/journalApp/journal",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"journalApp",
+								"journal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "jon123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "jon",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Sad\" ,\r\n    \"content\": \"i am very very sad\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/journalApp/journal/id/679e47672e05301ef2566535",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"journalApp",
+								"journal",
+								"id",
+								"679e47672e05301ef2566535"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "jon123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "jon",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/journalApp/journal/id/679f1e420cf62423e38dc605",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"journalApp",
+								"journal",
+								"id",
+								"679f1e420cf62423e38dc605"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Gell All Users",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "amaan123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "amaan",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/journalApp/admin/all-users",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"journalApp",
+								"admin",
+								"all-users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Admin",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "admin123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"amaan\",\r\n    \"password\":\"amaan123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/journalApp/admin/create-admin-user",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"journalApp",
+								"admin",
+								"create-admin-user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clear-app-cache",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "admin123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/journalApp/admin/clear-app-cache",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"journalApp",
+								"admin",
+								"clear-app-cache"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Public",
+			"item": [
+				{
+					"name": "Greetings",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "username",
+									"value": "amaan",
+									"type": "string"
+								},
+								{
+									"key": "password",
+									"value": "amaan123",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{domain}}/journalApp/user",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"journalApp",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "jon123",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "jon",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"jon\",\r\n    \"password\":\"jon123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/journalApp/public/login",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"journalApp",
+								"public",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signup",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userName\":\"jon\",\r\n    \"password\":\"jon123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{domain}}/journalApp/public/signup",
+							"host": [
+								"{{domain}}"
+							],
+							"path": [
+								"journalApp",
+								"public",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

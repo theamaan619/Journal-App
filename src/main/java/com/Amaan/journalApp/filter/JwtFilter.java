@@ -26,6 +26,9 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
+
+
+
         String authorizationHeader = request.getHeader("Authorization");
         String username = null;
         String jwt = null;
@@ -44,4 +47,11 @@ public class JwtFilter extends OncePerRequestFilter {
         response.addHeader("admin","jon");
         chain.doFilter(request, response);
     }
+
+//    @Override
+//    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+//        String path = request.getRequestURI();
+//        return path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui") || path.startsWith("/swagger-resources");
+//    }
+
 }

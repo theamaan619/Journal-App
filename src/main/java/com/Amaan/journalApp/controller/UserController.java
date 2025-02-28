@@ -6,6 +6,7 @@ import com.Amaan.journalApp.entity.User;
 import com.Amaan.journalApp.repository.UserRepository;
 import com.Amaan.journalApp.service.UserService;
 import com.Amaan.journalApp.service.WeatherService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
+@Tag(name = "User APIs",description = "Read , Update & delete User")
 public class UserController {
 
     @Autowired

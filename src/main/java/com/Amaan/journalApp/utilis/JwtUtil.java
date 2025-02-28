@@ -29,7 +29,21 @@ public class JwtUtil {
         return extractAllClaims(token).getExpiration();
     }
 
+//    private Claims extractAllClaims(String token) {
+//        return Jwts.parser()
+//                .verifyWith(getSigningKey())
+//                .build()
+//                .parseSignedClaims(token)
+//                .getPayload();
+//    }
+
     private Claims extractAllClaims(String token) {
+        if (token == null || token.trim().isEmpty()) {
+            throw new IllegalArgumentException("JWT token is missing or empty");
+        }
+        if (token.split("\\.").length != 3) {
+            throw new IllegalArgumentException("Invalid JWT format: must have exactly two dots");
+        }
         return Jwts.parser()
                 .verifyWith(getSigningKey())
                 .build()

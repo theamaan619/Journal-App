@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -31,20 +32,50 @@ public class SpringSecurity {
     @Autowired
     private JwtFilter jwtFilter;
 
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        return http.authorizeHttpRequests(request -> request
-                        .requestMatchers("/public/**").permitAll() // Publicly accessible
-                        .requestMatchers("/journal/**", "/user/**").authenticated() // Requires authentication
-                        .requestMatchers("/admin/**").hasRole("ADMIN") // Requires ADMIN role
-                        .anyRequest().authenticated()) // All other requests  require authentication
+//        return http.authorizeHttpRequests(request -> request
+//                        .requestMatchers("/public/**", "/api/public/**", "/api/public/authenticate").permitAll() // Publicly accessible
+//                        .requestMatchers("/journal/**", "/user/**").authenticated() // Requires authentication
+//                        .requestMatchers("/admin/**").hasRole("ADMIN") // Requires ADMIN role
+//                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**").permitAll()
+//                        .anyRequest().authenticated()) // All other requests  require authentication
 //                .httpBasic(Customizer.withDefaults()) // Enables HTTP Basic Authentication
 //                .formLogin(Customizer.withDefaults()) // Enables default login form
-                .csrf(AbstractHttpConfigurer::disable) // Disables CSRF (use cautiously)
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+//                .csrf(AbstractHttpConfigurer::disable) // Disables CSRF (use cautiously)
+//                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+//                .build();
+
+
+
+        http
+                .csrf(csrf -> csrf.disable()) // Disable CSRF for API access
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui.html",
+                                "/swagger-resources/**",
+                                "/webjars/**"
+                        ).permitAll()  // ✅ Allow Swagger without authentication
+                        .requestMatchers("/","/public/**", "/api/public/**", "/api/public/authenticate").permitAll() // Publicly accessible
+                        .requestMatchers("/journal/**", "/user/**").authenticated() // Requires authentication
+                        .requestMatchers("/admin/**").hasRole("ADMIN") // Requires ADMIN role
+                        .anyRequest().authenticated() // 🔒 Secure all other endpoints
+                )
+                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // No sessions
+                .httpBasic(httpBasic -> httpBasic.disable()) // Disable basic auth
+                .formLogin(formLogin -> formLogin.disable()) // Disable form login
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // 🔥 Add JWT Filter
+
+        return http.build();
+
+
+
     }
+
 
 
     @Autowired
@@ -52,7 +83,7 @@ public class SpringSecurity {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
-//    @Lazy // used tom break the circular dependency
+    //    @Lazy // used tom break the circular dependency
 //    @Bean  // Not to use when in same class
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
