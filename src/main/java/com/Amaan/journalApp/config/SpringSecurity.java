@@ -32,6 +32,9 @@ public class SpringSecurity {
     @Autowired
     private JwtFilter jwtFilter;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder; // Injecting password encoder
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -63,11 +66,14 @@ public class SpringSecurity {
                         .requestMatchers("/","/public/**", "/api/public/**", "/api/public/authenticate").permitAll() // Publicly accessible
                         .requestMatchers("/journal/**", "/user/**").authenticated() // Requires authentication
                         .requestMatchers("/admin/**").hasRole("ADMIN") // Requires ADMIN role
+                        .requestMatchers("/auth/google/**").permitAll() // ✅ Allow Google OAuth
                         .anyRequest().authenticated() // 🔒 Secure all other endpoints
+
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // No sessions
                 .httpBasic(httpBasic -> httpBasic.disable()) // Disable basic auth
                 .formLogin(formLogin -> formLogin.disable()) // Disable form login
+                .oauth2Login(oauth2 -> oauth2.defaultSuccessUrl("/home", true)) // Redirect after successful login
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // 🔥 Add JWT Filter
 
         return http.build();
@@ -80,14 +86,14 @@ public class SpringSecurity {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 
-    //    @Lazy // used tom break the circular dependency
-//    @Bean  // Not to use when in same class
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    @Lazy // 🔄 Delays initialization to prevent circular dependency
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration auth) throws Exception {
